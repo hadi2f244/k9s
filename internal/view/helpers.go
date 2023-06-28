@@ -95,6 +95,11 @@ func describeResource(app *App, m ui.Tabular, gvr, path string) {
 }
 
 func showPodsWithLabels(app *App, path string, sel map[string]string) {
+	if len(sel) == 0 {
+		app.Flash().Warnf("No selector set on service %s.", path)
+		return
+	}
+
 	labels := make([]string, 0, len(sel))
 	for k, v := range sel {
 		labels = append(labels, fmt.Sprintf("%s=%s", k, v))
